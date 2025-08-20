@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zain's Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'frontend/style.css' %}">
+</head>
+<body>
+  <div class="d-flex">
+    <!-- Sidebar -->
+    <div id="sidebar" class="bg-dark text-white p-4">
+      <h3 class="mb-4">⚡ Zain</h3>
+      <ul class="nav flex-column">
+        <li class="nav-item"><a href="#" class="nav-link text-white">🏠 Dashboard</a></li>
+        <li class="nav-item"><a href="#" class="nav-link text-white">📋 Tabs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link text-white" onclick="logout()">🚪 Logout</a></li>
+      </ul>
+    </div>
+
+    <!-- Main Section -->
+    <div id="mainContent" class="flex-grow-1">
+      <!-- Top Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4">
+        <a class="navbar-brand fw-bold" href="#">📊 My Dashboard</a>
+        <div class="ms-auto d-flex align-items-center">
+          <button id="darkModeToggle" class="btn btn-outline-secondary btn-sm me-3">🌙 Dark Mode</button>
+          <span class="me-3 fw-semibold">👤 Zain</span>
+          <button class="btn btn-outline-danger btn-sm" onclick="logout()">Logout</button>
+        </div>
+      </nav>
+
+      <!-- Page Content -->
+      <div class="p-4">
+        <h2 class="mb-4">📋 My Tabs</h2>
+
+        <!-- Add Tab Form -->
+        <div class="card p-3 mb-4">
+          <h5>Add New Tab</h5>
+          <div class="input-group mb-3">
+            <input type="text" id="tabName" class="form-control" placeholder="Tab Name">
+            <input type="text" id="tabEmoji" class="form-control" placeholder="Emoji (e.g. 💼)">
+            <button class="btn btn-primary" onclick="addTab()">Add</button>
+          </div>
+        </div>
+
+        <!-- Tabs List -->
+        <ul id="tabList" class="list-group shadow-sm"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Tab</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="editTabName" class="form-control mb-2" placeholder="Tab Name">
+          <input type="text" id="editTabEmoji" class="form-control" placeholder="Emoji">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-success" onclick="saveTabEdit()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap + JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'frontend/app.js' %}"></script>
+</body>
+</html>
+
+
+
+
+{% comment %} 🔥 Step by Step Flow (Frontend use karna)
+🟢 1. Signup (Naya User)
+
+Signup Email aur Signup Password fill karo
+
+Signup button dabao
+
+Neeche signupStatus me success message aayega (ya error agar same email pehle use ho chuki hai).
+
+🟡 2. Login (JWT Tokens lena)
+
+Login Email aur Login Password fill karo
+
+Login button dabao
+
+Agar credentials sahi hain → message aayega Login successful ✅
+
+Backend se tumhe access token + refresh token milenge → ye localStorage me save ho jaayenge automatically.
+
+Aur turant tumhara fetchTabs() run hoga → agar tabs hain to list me show ho jayenge.
+
+🟢 3. Tabs kaam (CRUD)
+
+Add Tab
+
+Tab Name aur Emoji fill karo
+
+Add Tab button dabao
+
+Naya tab turant neeche list me add ho jayega
+
+List Tabs
+
+Page load / Login ke baad automatic chal jata hai
+
+Sare tabs ek list me emoji + name ke sath show honge
+
+Delete Tab
+
+Har tab ke saath ❌ button hoga
+
+Uspe click karte hi tab delete ho jayega aur list update ho jaayegi
+
+🟡 4. Token Refresh (Auto handled)
+
+Agar tumhara access token expire ho jata hai → JS code automatically refresh token use karke naya access token le lega.
+
+Matlab tumhe manually kuch nahi karna. {% endcomment %}
